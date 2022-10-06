@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.Quantum.Sdk/0.26.233415">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<OutputType>Library</OutputType>
+	</PropertyGroup>
+	
+	<ItemGroup>	
+		<PackageReference Include="Microsoft.AspNetCore.AzureKeyVault.HostingStartup" Version="2.0.4" />
+		<PackageReference Include="Microsoft.Quantum.Compiler" Version="0.26.233415" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+	</ItemGroup>
+
+</Project>

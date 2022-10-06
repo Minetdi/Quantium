@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "QuantumTServer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
