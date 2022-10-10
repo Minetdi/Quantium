@@ -103,6 +103,25 @@
         ResetAll(c1);
     }
 
+    operation showPhaseKickbackTrick2(c0 : Qubit[], c1 : Qubit[]) : Unit {
+
+        //use (c0, c1) = (Qubit[2], Qubit[2]);
+
+        ApplyToEach(H, c1);
+
+
+        Message("The starting state of qubits c1:");
+        DumpRegister((), c1);
+        // Compare registers and mark the result in their phase.
+        MakingOracleAsPhaseOracle2(MarkColorEquality, c0, c1);
+
+        Message("");
+        Message("The state of qubits c1 after the equality check:");
+        DumpRegister((), c1);
+
+        ResetAll(c1);
+    }
+
     //@EntryPoint()
     operation ShowColorEqualityCheck() : Unit {
         // Leave register c0 in the |00⟩ state.
@@ -129,6 +148,7 @@
         Message("The state of qubits c1 and target after the equality check:");
         DumpRegister((), c1 + [target]);
 
+
         // Return the qubits to |0⟩ state before releasing them.
         ResetAll(c1 + [target]);
     }
@@ -137,10 +157,10 @@
 
 
     //@EntryPoint()
-    operation ShowColoringValidationCheck() : Unit {
+    operation ShowColoringValidationCheck(edges : (Int, Int)[], nVertices: Int) : Unit {
         // Graph description: hardcoded from the example
-        let nVertices = 5;
-        let edges = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (3, 4)];
+        //let nVertices = 5;
+        //let edges = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (3, 4)];
 
         // Graph coloring: hardcoded from the example
         let coloring = [false, false, true, false, false, true, true, true, false, true];

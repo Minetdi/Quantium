@@ -8,13 +8,16 @@
    open Microsoft.Quantum.Diagnostics;
    open Microsoft.Quantum.Intrinsic;
 
-
+   @ Microsoft.Quantum.Core.Attribute()
+   newtype EntryPoint = (Unit);
    // Main Test Function
+
+
    @EntryPoint()
-   operation SolveGraphColoringProblem() : Unit {
+   operation SolveGraphColoringProblem(edges : (Int, Int)[], nVertices : Int) : Unit {
         // Graph description: hardcoded from the example.
-        let nVertices = 5;
-        let edges = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (3, 4)];
+        //let nVertices = 5;
+        //let edges = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (3, 4)];
 
         // Define the oracle that implements this graph coloring.
         let markingOracle = MarkValidVertexColoring(edges, _, _);
@@ -38,6 +41,7 @@
         mutable answer = [false, size=nQubits];
         use (register, output) = (Qubit[nQubits], Qubit());
         mutable isCorrect = false;
+        ShowColoringValidationCheck(edges, nVertices);
         repeat {
             GroversSearch(register, phaseOracle, nIterations);
             let res = MultiM(register);
@@ -55,6 +59,6 @@
         for i in 0 .. nVertices - 1 {
             Message($"Vertex {i} - color {BoolArrayAsInt(colorBits[i])}");
         }
-        ShowColorEqualityCheck();
+        //ShowColorEqualityCheck();
    }
 }

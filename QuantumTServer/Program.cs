@@ -6,7 +6,9 @@ using static System.Diagnostics.Debug;
 
 using Microsoft.Quantum.Simulation.Core;
 using Microsoft.Quantum.Simulation.Simulators;
+using Microsoft.Quantum.Simulation;
 using Quantum.QuantumLib;
+
 
 namespace Quantum.QuantumEffect
 {
@@ -36,7 +38,20 @@ namespace Quantum.QuantumEffect
                     //Console.WriteLine(receivingInt);
                     //Console.WriteLine(sent == teleport ? "Teleportation Sucessfull!! \n" : "\n");
                 }
-                _ = SolveGraphColoringProblem.Run(sim).Result;
+
+                //(Int64, Int64)[] edges = new (Int64, Int64)[] { (0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (3, 4) };
+
+                int nVertices = 5;
+                (Int64, Int64)[] edges = { (0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (3, 4) };
+                var qarray = new QArray<(long, long)>(edges);
+                await SolveGraphColoringProblem.Run(sim, qarray, nVertices);
+                //int[] marks = new int[5] { 99, 98, 92, 97, 95 };
+
+
+                // _ = SolveGraphColoringProblem.Run(sim).Result;
+                //await SolveGraphColoringProblem.Run(sim, qarray, nVertices);
+                Int64[] numbers = new Int64[10] { 1, 3, 4, 9, 4, 13, 6, 19, 8, 2 };
+                var constant = await GetISBNConstant.Run(sim, new QArray<long>(numbers));
                 //Console.WriteLine("\n\n");
                 //_ = ShowColorEqualityCheck.Run(sim).Result;
                 //Console.WriteLine("\n\n");
@@ -44,7 +59,7 @@ namespace Quantum.QuantumEffect
                 //Console.WriteLine("\n\n");
                 //_ = showPhaseKickbackTrick.Run(sim).Result;
 
-                //Console.WriteLine("result: \n" + res);
+                Console.WriteLine("result: " + constant);
 
                 //Console.WriteLine("Colors simul: \n" + simulateColor);
                 System.Console.WriteLine("\n\n Press Enter to exit ...\n\n");
@@ -52,6 +67,9 @@ namespace Quantum.QuantumEffect
 
             }
         }
+
+
+        //public static uint[] GetIds(this Microsoft.Quantum.Simulation.Core.IQArray<Microsoft.Quantum.Simulation.Core.Qubit> qubits);
 
     }
 

@@ -43,7 +43,7 @@
         ApplyToEach(H, qubits);
         Message("The qubit register in a uniform superposition: ");
         DumpMachine();
-        mutable results = new Result[0];
+        mutable results = [];
         for q in qubits {
             Message(" ");
             set results += [M(q)];
