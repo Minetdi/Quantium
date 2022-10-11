@@ -41,7 +41,8 @@
         mutable answer = [false, size=nQubits];
         use (register, output) = (Qubit[nQubits], Qubit());
         mutable isCorrect = false;
-        ShowColoringValidationCheck(edges, nVertices);
+        //
+        //ShowColoringValidationCheck(edges, nVertices);
         repeat {
             GroversSearch(register, phaseOracle, nIterations);
             let res = MultiM(register);

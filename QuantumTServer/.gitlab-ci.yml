@@ -1,0 +1,32 @@
+﻿variables:
+  EXE_RELEASE_FOLDER: 'Quantum\QuantumT\bin\Release'
+  MSI_RELEASE_FOLDER: 'Setup\bin\Release'
+  TEST_FOLDER: 'Tests\bin\Release'
+  DEPLOY_FOLDER: 'P:\Projects\YourApp\Builds'
+
+
+
+stages:
+  - build
+  - test
+
+
+buildQuantum:
+  stage: build
+  image: docker:latest
+  services:
+  - docker:dind
+  script:
+  - docker info
+  - mkdir build
+  - docker login -u minetdi --password-stdin
+  - docker build -t mind3001/Quantium -f Dockerfile .
+  - docker push mind3001/Quantium
+
+runQuantumT:
+  services:
+  - name: mind3001/Quantium
+    alias: server
+  stage: test
+  script:
+  - "dotnet run"
