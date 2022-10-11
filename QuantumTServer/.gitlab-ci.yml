@@ -8,7 +8,7 @@
 
 stages:
   - build
-  - test
+  - run
 
 
 buildQuantum:
@@ -27,6 +27,7 @@ runQuantumT:
   services:
   - name: mind3001/Quantium
     alias: server
-  stage: test
+  stage: run
   script:
+  - "cd QuantumTServer"
   - "dotnet run"
