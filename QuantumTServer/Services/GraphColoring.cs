@@ -1,24 +1,18 @@
-﻿using System;
-using System.Globalization;
-using System.Collections.Generic;
-//using System.Linq;
-using System.Threading.Tasks;
-using static System.Diagnostics.Debug;
-using Microsoft.Quantum.Simulation.Core;
+﻿using Microsoft.Quantum.Simulation.Core;
 using Microsoft.Quantum.Simulation.Simulators;
-using Microsoft.Quantum.Simulation;
 using Quantum.QuantumLib;
 
-namespace Quantum.QuantumEffect
+namespace QuantumTServer.Services
 {
     public class GraphColoring
     {
 
-        async Task displayColorQuantumDetails(QuantumSimulator sim, String args1, String args2)
+        public void displayColorQuantumDetails(QuantumSimulator sim, String args1, String args2)
         {
             List<(long, long)> edges = new List<(long, long)>();
             long nVertices = Convert.ToInt64(args2);
             List<int> nums = new List<int>();
+            var qarray = new QArray<(long, long)>();
 
             while (args1 != null)
             {
@@ -48,7 +42,6 @@ namespace Quantum.QuantumEffect
                 }
 
                 edges = make_pair(nums);
-                var qarray = new QArray<(long, long)>();
                 (long, long)[] ed = make_pair(nums).ToArray();
 
                 foreach ((int, int) e in ed)
@@ -58,12 +51,13 @@ namespace Quantum.QuantumEffect
                     qarray = new QArray<(long, long)>(ed);
 
                 }
-                await SolveGraphColoringProblem.Run(sim, qarray, nVertices);
+             
 
                 //var qarray = new QArray<(long, long)>(ed);
                 //SolveGraphColoringProblem.Run(sim, qarray, nVertices);
 
             }
+            //SolveGraphColoringProblem.Run(sim, qarray, nVertices);
 
         }
 

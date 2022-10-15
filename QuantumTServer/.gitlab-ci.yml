@@ -29,5 +29,5 @@ runQuantumT:
     alias: server
   stage: run
   script:
-  - "cd QuantumTServer"
-  - "dotnet run"
+  - cd QuantumTServer
+  - dotnet run

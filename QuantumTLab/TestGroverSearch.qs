@@ -8,12 +8,12 @@
    open Microsoft.Quantum.Diagnostics;
    open Microsoft.Quantum.Intrinsic;
 
-   @ Microsoft.Quantum.Core.Attribute()
-   newtype EntryPoint = (Unit);
+   //@ Microsoft.Quantum.Core.Attribute()
+   //newtype EntryPoint = (Unit);
    // Main Test Function
 
 
-   @EntryPoint()
+   //@EntryPoint()
    operation SolveGraphColoringProblem(edges : (Int, Int)[], nVertices : Int) : Unit {
         // Graph description: hardcoded from the example.
         //let nVertices = 5;

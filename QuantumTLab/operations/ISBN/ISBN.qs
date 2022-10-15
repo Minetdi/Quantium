@@ -5,7 +5,7 @@
     open Microsoft.Quantum.Arithmetic;
     open Microsoft.Quantum.Arrays;
     open Microsoft.Quantum.Diagnostics;
-    // open Microsoft.Quantum.Math;
+    //open quantumLib.operations;
 
     operation ISBN () : Unit {
         
@@ -17,6 +17,14 @@
         X(qubit);
         H(qubit);
     }
+
+    // Réflexion sur la superposition uniforme
+    operation PrepareISBNSuperpositionOverDigits(digitReg : Qubit[]) : Unit is Adj + Ctl {
+        PrepareUniformSuperpositionOverDigits(digitReg, 10, 1.0, 0.0);
+    }
+
+    // Détermine le nombre d' intérations de 
+
 
     // Appliquer le mappage arithmétique à l’état cible
 
@@ -68,5 +76,53 @@
         }
 
         return (a, b % 11);
+    }
+
+
+    // Vérifie si l'ISBN est valide ou non
+    function IsIsbnValid(digits : Int[]) : Bool {
+        // ensure array is 10 digits
+        EqualityFactI(Length(digits), 10, "Expected a 10-digit number.");
+
+        mutable acc = 0;
+        for (idx, digit) in Enumerated(digits) {
+            set acc += (10 - idx) * digit;
+        }
+        return acc % 11 == 0;
+    }
+
+    // Reconstruit les chiffres perdues 
+    function MakeResultISBN(missingDigit : Int, inputISBN : Int[]) : Int[] {
+        mutable resultISBN = [0, size=Length(inputISBN)];
+        for i in 0..Length(inputISBN) - 1 {
+            if inputISBN[i] < 0 {
+                set resultISBN w/= i <- missingDigit;
+            }
+            else {
+                set resultISBN w/= i <- inputISBN[i];
+            }
+        }
+        return resultISBN;
+    }
+
+    operation ReflectAboutUniform(digitReg : Qubit[]) : Unit {
+        within {
+            // Transform the uniform superposition to all-zero.
+            Adjoint PrepareISBNSuperpositionOverDigits(digitReg);
+            // Transform the all-zero state to all-ones
+            ApplyToEachCA(X, digitReg);
+        } apply {
+            // Reflects about that all-ones state, then let the within/apply
+            // block transform the state back to the initial basis.
+            Controlled Z(Most(digitReg), Tail(digitReg));
+        }
+    }
+
+    operation RunGroversSearch(register : Qubit[], phaseOracle : ((Qubit[]) => Unit is Adj), iterations : Int) : Unit {
+        PrepareISBNSuperpositionOverDigits(register);
+        for _ in 1 .. iterations {
+            phaseOracle(register);
+            ReflectAboutUniform(register);
+        }
     }
 }
