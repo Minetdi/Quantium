@@ -20,7 +20,7 @@ buildQuantum:
   - docker info
   - mkdir build
   - docker login -u minetdi --password-stdin
-  - docker build -t mind3001/Quantium -f Dockerfile .
+  - docker build -t mind3001/Quantium -f QuantumTServer/Dockerfile .
   - docker push mind3001/Quantium
 
 runQuantumT:
